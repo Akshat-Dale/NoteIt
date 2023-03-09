@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@drawable/bottomsheet_corner"
+    android:id="@+id/lineardelete">
+
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="5dp"
+        android:background="@drawable/curve_background"
+        android:backgroundTint="#C0C0C0"
+        android:layout_margin="10dp"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Are you share you want to \ndelete this note ?"
+        android:gravity="center"
+        android:textColor="#343434"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"/>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:text="No"
+        android:background="@drawable/curve_background"
+        android:backgroundTint="#C0C0C0"
+        android:padding="4dp"/>
+
+
+
+    <Button
+        android:id="@+id/buttonYes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:text="Yes"
+        android:background="@drawable/curve_background"
+        android:backgroundTint="#B7B7B7"
+        android:padding="4dp"
+        android:layout_marginBottom="30dp"/>
+
+
+</LinearLayout>
