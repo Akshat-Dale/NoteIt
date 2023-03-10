@@ -20,6 +20,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    //MVVM flow
+//    MainActivity.java --> NotesViewModel.java --> NotesRepository.java --> NotesDao.java --> NotesDatabase
+//                                                               |                                    ^
+//                                                               ! ------------------------------------|
    ActivityMainBinding activityMainBinding;
     NotesViewModel notesViewModel;
 
@@ -31,87 +36,51 @@ public class MainActivity extends AppCompatActivity {
         notesViewModel = new ViewModelProvider(this).get(NotesViewModel.class);
         activityMainBinding.textViewNofilter.setBackgroundResource(R.drawable.curve_background_selected);
 
-        activityMainBinding.floatingbuttonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,AddNoteActivity.class));
-            }
+        activityMainBinding.floatingbuttonAdd.setOnClickListener(view -> startActivity(new Intent(MainActivity.this,AddNoteActivity.class)));
+
+        notesViewModel.getAllNotes.observe(this, this::setAdapter);
+
+        activityMainBinding.textViewNofilter.setOnClickListener(view -> {
+            setData(0);
+            activityMainBinding.textViewNofilter.setBackgroundResource(R.drawable.curve_background_selected);
+            activityMainBinding.textViewLtH.setBackgroundResource(R.drawable.curve_background);
+            activityMainBinding.textViewHtL.setBackgroundResource(R.drawable.curve_background);
+        });
+
+        activityMainBinding.textViewHtL.setOnClickListener(view -> {
+            setData(1);
+            activityMainBinding.textViewNofilter.setBackgroundResource(R.drawable.curve_background);
+            activityMainBinding.textViewLtH.setBackgroundResource(R.drawable.curve_background);
+            activityMainBinding.textViewHtL.setBackgroundResource(R.drawable.curve_background_selected);
+        });
+
+        activityMainBinding.textViewLtH.setOnClickListener(view -> {
+            setData(2);
+            activityMainBinding.textViewNofilter.setBackgroundResource(R.drawable.curve_background);
+            activityMainBinding.textViewLtH.setBackgroundResource(R.drawable.curve_background_selected);
+            activityMainBinding.textViewHtL.setBackgroundResource(R.drawable.curve_background);
         });
 
 
-
-
-        notesViewModel.getAllNotes.observe(this,notes -> {
-
-            setAdapter(notes);
-        });
-
-
-        activityMainBinding.textViewNofilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setData(0);
-                activityMainBinding.textViewNofilter.setBackgroundResource(R.drawable.curve_background_selected);
-                activityMainBinding.textViewLtH.setBackgroundResource(R.drawable.curve_background);
-                activityMainBinding.textViewHtL.setBackgroundResource(R.drawable.curve_background);
-
-
-            }
-        });
-
-        activityMainBinding.textViewHtL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                setData(1);
-                activityMainBinding.textViewNofilter.setBackgroundResource(R.drawable.curve_background);
-                activityMainBinding.textViewLtH.setBackgroundResource(R.drawable.curve_background);
-                activityMainBinding.textViewHtL.setBackgroundResource(R.drawable.curve_background_selected);
-            }
-        });
-
-        activityMainBinding.textViewLtH.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setData(2);
-                activityMainBinding.textViewNofilter.setBackgroundResource(R.drawable.curve_background);
-                activityMainBinding.textViewLtH.setBackgroundResource(R.drawable.curve_background_selected);
-                activityMainBinding.textViewHtL.setBackgroundResource(R.drawable.curve_background);
-            }
-        });
-
-
-        activityMainBinding.filterIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
+        activityMainBinding.filterIcon.setOnClickListener(view -> {
         });
 
     }
 
     public void setData(int priority){
-
         if (priority == 0) {
-            notesViewModel.getAllNotes.observe(this, notes -> {
-                setAdapter(notes);
-            });
+            notesViewModel.getAllNotes.observe(this, this::setAdapter);
         }
         else  if (priority == 1) {
-            notesViewModel.highToLow.observe(this, notes -> {
-                setAdapter(notes);
-            });
+            notesViewModel.highToLow.observe(this, this::setAdapter);
         }
         else  if (priority == 2) {
-            notesViewModel.lowToHigh.observe(this, notes -> {
-                setAdapter(notes);
-            });
+            notesViewModel.lowToHigh.observe(this, this::setAdapter);
         }
     }
     public void setAdapter(List<Notes> notes){
 
         activityMainBinding.mainRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-
         if (notes.size()==0){
             activityMainBinding.addNoteTV.setVisibility(View.VISIBLE);
             activityMainBinding.mainRecyclerView.setVisibility(View.GONE);

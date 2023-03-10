@@ -20,26 +20,21 @@ public class NotesViewModel extends AndroidViewModel {
 
     public NotesViewModel(@NonNull Application application) {
         super(application);
-
-         notesRepository = new NotesRepository(application);
+        notesRepository = new NotesRepository(application);
         getAllNotes = notesRepository.getAllNotes;
         highToLow = notesRepository.highToLow;
         lowToHigh = notesRepository.lowToHigh;
-
     }
 
     public void insertNotes(Notes notes){
-
         notesRepository.insertNotes(notes);
     }
 
     public void updateNotes(Notes notes){
-
         notesRepository.updateNotes(notes);
     }
 
    public void deleteNotes(int id){
-
         notesRepository.deleteNotes(id);
     }
 }
